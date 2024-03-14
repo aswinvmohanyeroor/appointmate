@@ -144,7 +144,7 @@ export async function sendMassMail(req, res) {
         html: `
             <p>Hello ${Name},</p>
             <p>This is a mass email from the tutor ${tutor}. Please click on the link below to book an appointment with the tutor:</p>
-            <a href="http://localhost:3000/appointments?id=${tutor}&std=${studentData._id}">Book Appointment</a>
+            <a href="https://appointmate-three.vercel.app/appointments?id=${tutor}&std=${studentData._id}">Book Appointment</a>
         `,
       };
 
