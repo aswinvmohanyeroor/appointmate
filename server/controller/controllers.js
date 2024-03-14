@@ -127,7 +127,7 @@ export async function sendMassMail(req, res) {
       service: "gmail",
       auth: {
         user: "cyberfork2000@gmail.com",
-        pass: " Zx)(zx09",
+        pass: "anqc jzjp oklb uint",
       },
     });
 
