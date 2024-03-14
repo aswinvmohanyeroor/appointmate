@@ -59,7 +59,7 @@ const AdminDashboard = () => {
         category,
       };
       const response = await axios.post(
-        "http://localhost:3001/api/admin",
+        "https://appointmate-njp3.onrender.com/api/admin",
         userData
       );
       console.log(response);
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     try {
-      axios.get("http://localhost:3001/api/ventors").then((response) => {
+      axios.get("https://appointmate-njp3.onrender.com/api/ventors").then((response) => {
         console.log(response);
         setVendors(response.data);
       });
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
 
   const deleteVendor = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/ventors/${id}`);
+      await axios.delete(`https://appointmate-njp3.onrender.com/api/ventors/${id}`);
       setVendors(vendors.filter((vendor) => vendor._id !== id));
     } catch (error) {
       console.error("Error deleting company:", error);
@@ -106,7 +106,7 @@ const AdminDashboard = () => {
         category: editedVendorCategory,
       };
       await axios.put(
-        `http://localhost:3001/api/ventors/${id}`,
+        `https://appointmate-njp3.onrender.com/api/ventors/${id}`,
         editedVendorData
       );
       setEditingVendorId(null);

@@ -200,11 +200,11 @@ export default function UserPage() {
   const tutor = Cookies.get("UserEmail");
 
   const handleMailAll = async () => {
-    //sent user data to server http://localhost:3001/api/mailer
+    //sent user data to server https://appointmate-njp3.onrender.com/api/mailer
     try {
       setLoading(true);
       await axios.post(
-        "http://localhost:3001/api/mailer",
+        "https://appointmate-njp3.onrender.com/api/mailer",
         { recipients: userData, tutor: tutor }
       );
       setLoading(false);

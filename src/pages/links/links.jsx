@@ -53,7 +53,7 @@ const Links = () => {
 
   const handleRemove = async (id) => {
 
-    await axios.post("http://localhost:3001/api/deleteAppointment", { id: id }).then((response) => {
+    await axios.post("https://appointmate-njp3.onrender.com/api/deleteAppointment", { id: id }).then((response) => {
       console.log(response);
       setFormData((prevFormData) => {
         const updatedFormData = [...prevFormData];
@@ -72,7 +72,7 @@ const Links = () => {
     //update the appointment
     const data = formData.find((item) => item._id === id);
     console.log(data);
-    axios.put("http://localhost:3001/api/appointment", data).then((response) => {
+    axios.put("https://appointmate-njp3.onrender.com/api/appointment", data).then((response) => {
       console.log(response);
     });
 
@@ -87,7 +87,7 @@ const Links = () => {
     try {
       setLoading(true);
       axios.post(
-        "http://localhost:3001/api/getAppointments", { tutor: tutor }
+        "https://appointmate-njp3.onrender.com/api/getAppointments", { tutor: tutor }
       ).then((response) => {
         console.log(response.data);
         setFormData(response.data);
@@ -100,7 +100,7 @@ const Links = () => {
     }
   };
   useEffect(() => {
-    //sent user data to server http://localhost:3001/api/mailer
+    //sent user data to server https://appointmate-njp3.onrender.com/api/mailer
     getAppointments();
   }, []);
 
@@ -118,7 +118,7 @@ const Links = () => {
     //sent data to db here
     try {
       setLoaderSubmit(true);
-      await axios.post("http://localhost:3001/api/appointment", data).then((response) => {
+      await axios.post("https://appointmate-njp3.onrender.com/api/appointment", data).then((response) => {
         console.log(response);
       });
       setFormData([...formData, data]);

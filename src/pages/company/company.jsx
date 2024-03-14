@@ -27,7 +27,7 @@ const Company = () => {
     try {
       setTableLoading(true);
       const response = await axios.get(
-        "http://localhost:3001/api/companies"
+        "https://appointmate-njp3.onrender.com/api/companies"
       );
       setCompanies(response.data);
       setTableLoading(false);
@@ -87,7 +87,7 @@ const Company = () => {
       };
 
       await axios.post(
-        "http://localhost:3001/api/companies",
+        "https://appointmate-njp3.onrender.com/api/companies",
         companyData
       );
       setSizeError(false);
@@ -105,7 +105,7 @@ const Company = () => {
   const deleteCompany = async (id) => {
     try {
       setDeleteLoading(true);
-      await axios.delete(`http://localhost:3001/api/companies/${id}`);
+      await axios.delete(`https://appointmate-njp3.onrender.com/api/companies/${id}`);
       fetchCompanies();
       setDeleteLoading(false);
     } catch (error) {
@@ -123,7 +123,7 @@ const Company = () => {
       };
 
       await axios.put(
-        `http://localhost:3001/api/companies/${id}`,
+        `https://appointmate-njp3.onrender.com/api/companies/${id}`,
         editedCompanyData
       );
       setSizeError(false);

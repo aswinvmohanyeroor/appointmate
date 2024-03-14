@@ -33,7 +33,7 @@ export default function LoginForm() {
         password: password,
       };
       const response = await axios.post(
-        "http://localhost:3001/api/ventor",
+        "https://appointmate-njp3.onrender.com/api/ventor",
         userData
       );
       console.log(response);

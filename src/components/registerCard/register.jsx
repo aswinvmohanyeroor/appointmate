@@ -41,7 +41,7 @@ export const Register = () => {
       setFirstName("");
       setLastName("");
       const response = await axios.post(
-        "http://localhost:3001/api/register",
+        "https://appointmate-njp3.onrender.com/api/register",
         userData
       );
       setMessage(response.data);

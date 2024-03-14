@@ -43,7 +43,7 @@ export default function DashboardLayout() {
     try {
       const userId = Cookies.get("UserId");
       const response = await axios.get(
-        `http://localhost:3001/api/ventors/${userId}`
+        `https://appointmate-njp3.onrender.com/api/ventors/${userId}`
       );
       dispatch(setData(response.data));
       console.log(response);

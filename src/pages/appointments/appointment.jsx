@@ -48,7 +48,7 @@ const Appointment = () => {
     const getAppointments = async () => {
         const id = Cookies.get('id');
         try {
-            const response = await fetch("http://localhost:3001/api/getAppointments", {
+            const response = await fetch("https://appointmate-njp3.onrender.com/api/getAppointments", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const Appointment = () => {
     const getStudent = async () => {
         try {
             const studentID = Cookies.get('std');
-            const response = await fetch(`http://localhost:3001/api/student${studentID}`);
+            const response = await fetch(`https://appointmate-njp3.onrender.com/api/student${studentID}`);
             const data = await response.json();
             setStudent(data);
             console.log(data, student);
@@ -127,7 +127,7 @@ const Appointment = () => {
 
         await createOutlookEvent(appointments.find(appointment => appointment._id === id));
 
-        await fetch("http://localhost:3001/api/updateAppointee", {
+        await fetch("https://appointmate-njp3.onrender.com/api/updateAppointee", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -65,7 +65,7 @@ const Dashboard = () => {
       const userId = Cookies.get("UserId");
       console.log(userId);
       await axios.put(
-        `http://localhost:3001/api/ventors/${userId}`,
+        `https://appointmate-njp3.onrender.com/api/ventors/${userId}`,
         formData
       );
       console.log(formData);
