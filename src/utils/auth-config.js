@@ -13,8 +13,8 @@ export const msalConfig = {
         clientId: "ce4aeb81-d2c8-480e-967e-f69dffde55c3", // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
         authority: "https://login.microsoftonline.com/common",// Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
         clientSecret: "4mZ8Q~Jtn3Bu0oXo43V2TDWQzkfq3y78XeDsNbJx", // Client secret generated from the app registration in Azure portal
-        redirectUri: "http://localhost:3000/appointments", // This is the redirect URI of the app registration in Azure portal
-        postLogoutRedirectUri: "http://localhost:3000/",
+        redirectUri: "https://appointmate-three.vercel.app/appointments", // This is the redirect URI of the app registration in Azure portal
+        postLogoutRedirectUri: "https://appointmate-three.vercel.app/",
         navigateToLoginRequestUrl: false
     },
     caches: {
