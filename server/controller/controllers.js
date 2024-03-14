@@ -126,8 +126,8 @@ export async function sendMassMail(req, res) {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "navas3444a3@gmail.com",
-        pass: "rsql tewg dmdm yhts",
+        user: "cyberfork2000@gmail.com",
+        pass: " Zx)(zx09",
       },
     });
 
@@ -138,7 +138,7 @@ export async function sendMassMail(req, res) {
         { upsert: true, new: true, runValidators: true }
       );
       const mailOptions = {
-        from: "navas3444a3@gmail.com",
+        from: "cyberfork2000@gmail.com",
         to: Email,
         subject: `Sending Email using Node.js to ${Name}`,
         html: `
