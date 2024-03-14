@@ -1,0 +1,298 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
+import "./adminDashboard.scss";
+import Cookies from "js-cookie";
+
+const AdminDashboard = () => {
+  const navigate = useNavigate();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [category, setCategory] = useState("");
+  const [vendors, setVendors] = useState([]);
+  const [editingVendorId, setEditingVendorId] = useState(null);
+  const [editedVendorName, setEditedVendorName] = useState("");
+  const [editedVendorEmail, setEditedVendorEmail] = useState("");
+  const [editedVendorPassword, setEditedVendorPassword] = useState("");
+  const [editedVendorCategory, setEditedVendorCategory] = useState("");
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userData = {
+        name,
+        email,
+        password,
+        category,
+      };
+      const response = await axios.post(
+        "http://localhost:3001/api/admin",
+        userData
+      );
+      console.log(response);
+      setName("");
+      setEmail("");
+      setPassword("");
+      setCategory("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      axios.get("http://localhost:3001/api/ventors").then((response) => {
+        console.log(response);
+        setVendors(response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    const userId = Cookies.get("UserId");
+    if (userId !== "649dc9759013b48248c6ed54") {
+      navigate("/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vendors]);
+
+  const deleteVendor = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/ventors/${id}`);
+      setVendors(vendors.filter((vendor) => vendor._id !== id));
+    } catch (error) {
+      console.error("Error deleting company:", error);
+    }
+  };
+
+  const editVendor = async (id) => {
+    try {
+      const editedVendorData = {
+        name: editedVendorName,
+        email: editedVendorEmail,
+        password: editedVendorPassword,
+        category: editedVendorCategory,
+      };
+      await axios.put(
+        `http://localhost:3001/api/ventors/${id}`,
+        editedVendorData
+      );
+      setEditingVendorId(null);
+    } catch (error) {
+      console.error("Error editing company:", error);
+    }
+  };
+
+  const startEditingVendor = (id, name, email, password, category) => {
+    setEditingVendorId(id);
+    setEditedVendorName(name);
+    setEditedVendorEmail(email);
+    setEditedVendorPassword(password);
+    setEditedVendorCategory(category);
+  };
+
+  return (
+    <div className="admin--dashboard">
+      <form className="form--container" onSubmit={handleSubmit}>
+        <TextField
+          label="Name"
+          value={name}
+          onChange={handleNameChange}
+          placeholder="Name"
+        />
+        <TextField
+          label="Email"
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Email"
+        />
+        <TextField
+          label="Password"
+          value={password}
+          onChange={handlePasswordChange}
+          placeholder="Password"
+        />
+        <FormControl sx={{ width: 200 }}>
+          <InputLabel id="category-label">Category</InputLabel>
+          <Select
+            labelId="category-label"
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            <MenuItem value="Teacher">Teacher</MenuItem>
+            <MenuItem value="Staff">Staff</MenuItem>
+          </Select>
+        </FormControl>
+        <Button variant="outlined" type="submit">
+          Submit
+        </Button>
+      </form>
+      <div className="table--container">
+        <h1>Teachers</h1>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Id</TableCell>
+                <TableCell>Image</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Password</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell>Description</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {vendors.map((vendor, index) => (
+                <TableRow key={vendor._id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <img
+                      style={{ width: 50, borderRadius: "50%" }}
+                      src={vendor.image}
+                      alt=""
+                    />
+                  </TableCell>
+                  <TableCell>
+                    {editingVendorId === vendor._id ? (
+                      <TextField
+                        value={editedVendorName}
+                        onChange={(e) => setEditedVendorName(e.target.value)}
+                      />
+                    ) : (
+                      vendor.name
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editingVendorId === vendor._id ? (
+                      <TextField
+                        value={editedVendorEmail}
+                        onChange={(e) => setEditedVendorEmail(e.target.value)}
+                      />
+                    ) : (
+                      vendor.email
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editingVendorId === vendor._id ? (
+                      <TextField
+                        value={editedVendorPassword}
+                        onChange={(e) =>
+                          setEditedVendorPassword(e.target.value)
+                        }
+                      />
+                    ) : (
+                      vendor.password
+                    )}
+                  </TableCell>
+                  <TableCell>{vendor.phone}</TableCell>
+                  <TableCell>
+                    {editingVendorId === vendor._id ? (
+                      <FormControl>
+                        <Select
+                          value={editedVendorCategory}
+                          onChange={(e) =>
+                            setEditedVendorCategory(e.target.value)
+                          }
+                        >
+                          <MenuItem value="Teacher">Teacher</MenuItem>
+                          <MenuItem value="Staff">Staff</MenuItem>
+                        </Select>
+                      </FormControl>
+                    ) : (
+                      vendor.category
+                    )}
+                  </TableCell>
+                  <TableCell style={{ width: 200 }}>
+                    {vendor.description}
+                  </TableCell>
+                  <TableCell>
+                    {editingVendorId === vendor._id ? (
+                      <div className="spacing">
+                        <Button
+                          variant="contained"
+                          color="success"
+                          sx={{ color: "white" }}
+                          onClick={() => editVendor(vendor._id)}
+                        >
+                          Save
+                        </Button>
+
+                        <Button
+                          variant="contained"
+                          onClick={() => setEditingVendorId(null)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    ) : (
+                      <div style={{ display: "flex", gap: 5 }}>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => deleteVendor(vendor._id)}
+                        >
+                          Delete
+                        </Button>
+                        <Button
+                          variant="contained"
+                          onClick={() =>
+                            startEditingVendor(
+                              vendor._id,
+                              vendor.name,
+                              vendor.email,
+                              vendor.password,
+                              vendor.category
+                            )
+                          }
+                        >
+                          Edit
+                        </Button>
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </div>
+  );
+};
+
+export default AdminDashboard;

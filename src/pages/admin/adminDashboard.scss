@@ -1,0 +1,117 @@
+.admin--dashboard {
+    .table--container {
+
+        overflow-x: auto;
+        max-width: 90%;
+
+        // #companies {
+        //     width: 100%;
+        //     border-collapse: collapse;
+        //     border-radius: 10px;
+
+        //     thead {
+        //         background-color: #f2f2f2;
+
+        //         th {
+        //             padding: 10px;
+        //             text-align: left;
+        //             border-bottom: 1px solid #ddd;
+        //         }
+        //     }
+
+        //     tbody {
+        //         tr {
+        //             &:nth-child(even) {
+        //                 background-color: #f9f9f9;
+        //             }
+
+        //             &:nth-child(odd) {
+        //                 background-color: #ffffff;
+        //             }
+
+        //             td {
+        //                 padding: 10px;
+        //                 border-bottom: 1px solid #ddd;
+
+
+        //                 button {
+        //                     margin-right: 5px;
+        //                     padding: 5px 10px;
+        //                     border: none;
+        //                     border-radius: 4px;
+        //                     cursor: pointer;
+
+        //                     &.delete {
+        //                         background-color: red;
+        //                         color: white;
+        //                     }
+
+        //                     &.edit {
+        //                         background-color: #4caf50;
+        //                         color: white;
+
+        //                         &:hover {
+        //                             background-color: #45a049;
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        .spacing {
+            display: flex;
+            gap: 5px;
+        }
+    }
+
+
+    // input[type="text"],
+    // select {
+    //     padding: 5px;
+    //     border: 1px solid #ddd;
+    //     border-radius: 4px;
+    // }
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .form--container {
+        gap: 20px;
+        display: flex;
+        margin: 50px 60px 0px 60px;
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 30px 30px;
+        flex-wrap: wrap;
+        // width: 80vw;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.035);
+
+        // input[type="text"],
+        // select {
+        //     padding: 10px;
+        //     border: 1px solid #ddd;
+        //     border-radius: 8px;
+        // }
+
+        button {
+            padding: 12px 30px;
+            border-radius: 8px;
+            border: 1px solid #b8b8b8;
+        }
+
+        @media (max-width: 1000px) {
+            flex-direction: column;
+            width: max-content;
+            gap: 20px;
+
+            button {
+                width: 100%;
+            }
+        }
+    }
+}
