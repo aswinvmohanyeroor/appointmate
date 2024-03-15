@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import { useState } from "react";
 // @mui
 import {
+  Alert,
   Button,
   Card,
   Checkbox,
@@ -196,6 +197,7 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
   const [loading, setLoading] = useState(false);
+  const [Snackbar, setSnackbar] = useState(false);
 
   const tutor = Cookies.get("UserEmail");
 
@@ -208,6 +210,7 @@ export default function UserPage() {
         { recipients: userData, tutor: tutor }
       );
       setLoading(false);
+      setSnackbar(true);
     }
     catch (error) {
       console.error(error);
@@ -220,6 +223,19 @@ export default function UserPage() {
       <Helmet>
         <title> Appointmate </title>
       </Helmet>
+      <Snackbar
+        open={Snackbar}
+        autoHideDuration={1000}
+      >
+        <Alert
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+          onClose={() => setSnackbar(false)}
+        >
+          Email sent successfully
+        </Alert>
+      </Snackbar>
 
       <Container>
         <Stack
