@@ -4,9 +4,9 @@ import { LogLevel } from "@azure/msal-browser"
 
 export const msalConfig = {
     auth: {
-        clientId: process.env.MSAL_CLIENT, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
+        clientId: process.env.REACT_APP_MSAL_CLIENT, // 'Application (client) ID' of app registration in Azure portal - this value is a GUID
         authority: "https://login.microsoftonline.com/common",// Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
-        clientSecret: process.env.MSAL_SECRET, // Client secret generated from the app registration in Azure portal
+        clientSecret: process.env.REACT_APP_MSAL_SECRET, // Client secret generated from the app registration in Azure portal
         redirectUri: "https://appointmate-three.vercel.app/appointments", // This is the redirect URI of the app registration in Azure portal
         postLogoutRedirectUri: "https://appointmate-three.vercel.app/",
         navigateToLoginRequestUrl: false
@@ -26,6 +26,7 @@ export const msalConfig = {
         }
     }
 }
+
 
 export const loginRequest = {
     scopes: [
