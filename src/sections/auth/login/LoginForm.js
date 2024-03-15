@@ -1,20 +1,21 @@
 /* eslint-disable object-shorthand */
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // @mui
+import { LoadingButton } from "@mui/lab";
 import {
-  Link,
-  Stack,
+  CircularProgress,
   IconButton,
   InputAdornment,
-  TextField,
-  Checkbox,
+  Snackbar,
+  Stack,
+  TextField
 } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
 // components
 import Iconify from "../../../components/iconify";
+import Alert from '@mui/material/Alert';
 // import { useAdminLoginMutation } from "../../../services/login-service";
 
 // ----------------------------------------------------------------------
@@ -25,9 +26,12 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
 
   const handleClick = async () => {
     try {
+      setLoader(true);
       const userData = {
         email: email,
         password: password,
@@ -52,10 +56,12 @@ export default function LoginForm() {
       // Set the token in the axios default headers
       // eslint-disable-next-line dot-notation
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
+      setLoader(false);
       navigate("/dashboard"); // or navigate to the desired page after successful login
     } catch (error) {
+      setLoader(false);
       console.log(error);
+      setOpenSnack(true);
     }
 
     setEmail("");
@@ -113,10 +119,28 @@ export default function LoginForm() {
         type="submit"
         variant="contained"
         onClick={handleClick}
+        loading={loader}
         style={{ backgroundColor: "#860003", color: "white" }}
+        loadingIndicator={<CircularProgress style={{ color: "#fff" }} thickness={5} size={26} />}
       >
         Login
       </LoadingButton>
+
+      <div>
+        <Snackbar
+          open={openSnack}
+          autoHideDuration={1000}
+        >
+          <Alert
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+            onClose={() => setOpenSnack(false)}
+          >
+            Invalid email or password
+          </Alert>
+        </Snackbar>
+      </div>
     </>
   );
 }
