@@ -65,10 +65,8 @@ export default function DashboardLayout() {
     } else {
       navigate("/");
     }
-    if (userId === "649dc9759013b48248c6ed54") {
-      navigate("/admin");
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <StyledRoot>

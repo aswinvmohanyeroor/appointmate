@@ -48,6 +48,7 @@ export default function LoginForm() {
       const userEmail = response.data.userData.email;
       console.log(userEmail);
       Cookies.set("UserEmail", userEmail);
+      const userCategory = response.data.userData.category;
 
       // Store the token in a cookie
       Cookies.set("jwtToken", token);
@@ -57,6 +58,11 @@ export default function LoginForm() {
       // eslint-disable-next-line dot-notation
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       setLoader(false);
+      if (userCategory === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard"); // or navigate to the desired page after successful login
+      }
       navigate("/dashboard"); // or navigate to the desired page after successful login
     } catch (error) {
       setLoader(false);

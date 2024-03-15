@@ -1,22 +1,35 @@
+import bcrypt from "bcryptjs";
 import dontenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
-import nodemailer from "nodemailer";
 import { Student } from "../models/Students.model.js";
 import { Teacher } from "../models/User.model.js";
 import { Appointment } from "../models/appointment.model.js";
+import { generatePassword, transporter } from "../utils/helper.js";
 dontenv.config();
+
 
 //ventor login
 export async function ventorLogIn(req, res) {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
-    const user = await Teacher.findOne({ email, password });
-    console.log(user);
+    const user = await Teacher.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Invalid password" });
+    }
+
     const payload = {
       email: user.email,
-      password: user.password,
+      id: user._id, // It's better to use user id instead of password in the payload
     };
 
     //eslint-disable-next-line no-undef
@@ -63,36 +76,65 @@ export async function getVentors(req, res) {
 //upload ventors details in the app
 export async function createVendor(req, res) {
   try {
-    const { name, email, password, category } = req.body;
-    const newVentor = await Teacher.create({
+    const { name, email, category } = req.body;
+    const password = generatePassword(); // Generate a random password
+
+    //encrypt password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newVendor = await Teacher.create({
       name,
       email,
-      password,
+      password: hashedPassword,
       category,
     });
-    res.json(newVentor);
+
+    // Send an email to the vendor with the password
+
+    let mailOptions = {
+      from: 'cyberfork2000@gmail.com',
+      to: email,
+      subject: 'Appointmate account password',
+      text: `Hello ${name}, your apointmate password is ${password}`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.json(newVendor);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 }
-
 export async function editVendor(req, res) {
   try {
     const { id } = req.params;
     const {
       name,
       email,
-      password,
       category,
       image,
       description,
       phone,
     } = req.body;
+    const password = generatePassword(); // Generate a random password
+
+    //encrypt password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+
 
     const updateData = {
       name,
       email,
-      password,
+      password: hashedPassword,
       category,
       image,
       description,
@@ -100,13 +142,31 @@ export async function editVendor(req, res) {
     };
 
     await Teacher.findByIdAndUpdate(id, updateData);
+
+
+    let mailOptions = {
+      from: 'cyberfork2000@gmail.com',
+      to: email,
+      subject: 'Appointmate updated password',
+      text: `Hello ${name}, your updated appointmate is ${password} `
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+
+
     console.log(updateData);
     res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 }
-
 export async function deleteVendor(req, res) {
   try {
     const { id } = req.params;
@@ -123,13 +183,6 @@ export async function sendMassMail(req, res) {
   try {
     const { recipients, tutor } = req.body; // assuming req.body is an array of objects
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "cyberfork2000@gmail.com",
-        pass: "anqc jzjp oklb uint",
-      },
-    });
 
     const sendEmails = recipients.map(async ({ Name, Email }) => {
       const studentData = await Student.findOneAndUpdate(

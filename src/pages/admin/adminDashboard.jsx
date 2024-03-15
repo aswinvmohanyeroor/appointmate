@@ -40,9 +40,9 @@ const AdminDashboard = () => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  // const handlePasswordChange = (e) => {
+  //   setPassword(e.target.value);
+  // };
 
   const handleCategoryChange = (e) => {
     setCategory(e.target.value);
@@ -55,7 +55,7 @@ const AdminDashboard = () => {
       const userData = {
         name,
         email,
-        password,
+        // password,
         category,
       };
       const response = await axios.post(
@@ -65,7 +65,7 @@ const AdminDashboard = () => {
       console.log(response);
       setName("");
       setEmail("");
-      setPassword("");
+      // setPassword("");
       setCategory("");
     } catch (error) {
       console.log(error);
@@ -138,12 +138,12 @@ const AdminDashboard = () => {
           onChange={handleEmailChange}
           placeholder="Email"
         />
-        <TextField
+        {/* <TextField
           label="Password"
           value={password}
           onChange={handlePasswordChange}
           placeholder="Password"
-        />
+        /> */}
         <FormControl sx={{ width: 200 }}>
           <InputLabel id="category-label">Category</InputLabel>
           <Select
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
                 <TableCell>Image</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Password</TableCell>
+                {/* <TableCell>Password</TableCell> */}
                 <TableCell>Phone</TableCell>
                 <TableCell>Category</TableCell>
                 <TableCell>Description</TableCell>
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
                       vendor.email
                     )}
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     {editingVendorId === vendor._id ? (
                       <TextField
                         value={editedVendorPassword}
@@ -218,10 +218,10 @@ const AdminDashboard = () => {
                     ) : (
                       vendor.password
                     )}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>{vendor.phone}</TableCell>
                   <TableCell>
-                    {editingVendorId === vendor._id ? (
+                    {(editingVendorId === vendor._id && vendor.category !== "admin") ? (
                       <FormControl>
                         <Select
                           value={editedVendorCategory}
