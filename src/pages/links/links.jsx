@@ -1,9 +1,11 @@
 import {
+  Alert,
   Button,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   Switch,
   Table,
   TableBody,
@@ -26,6 +28,7 @@ const Links = () => {
   const [formData, setFormData] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [room, setRoom] = useState("ME12");
+  const [SnackbarShow, setSnackbarShow] = useState(false);
 
   const handleSelect = (event) => {
     setApplication(event.target.value);
@@ -122,6 +125,7 @@ const Links = () => {
         console.log(response);
       });
       setFormData([...formData, data]);
+      setSnackbarShow(true);
       setLoaderSubmit(false);
     }
     catch (err) {
@@ -135,6 +139,19 @@ const Links = () => {
 
   return (
     <div className="links--container">
+      <Snackbar
+        open={SnackbarShow}
+        autoHideDuration={1000}
+      >
+        <Alert
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+          onClose={() => setSnackbarShow(false)}
+        >
+          Appointment created successfully
+        </Alert>
+      </Snackbar>
       {loading && <p>Loading...</p>}
       <form className="links--form" onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>

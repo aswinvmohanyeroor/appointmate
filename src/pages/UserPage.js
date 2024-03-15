@@ -14,6 +14,7 @@ import {
   MenuItem,
   Paper,
   Popover,
+  Snackbar,
   Stack,
   Table,
   TableBody,
@@ -197,7 +198,7 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
   const [loading, setLoading] = useState(false);
-  const [Snackbar, setSnackbar] = useState(false);
+  const [SnackbarShow, setSnackbarShow] = useState(false);
 
   const tutor = Cookies.get("UserEmail");
 
@@ -210,7 +211,7 @@ export default function UserPage() {
         { recipients: userData, tutor: tutor }
       );
       setLoading(false);
-      setSnackbar(true);
+      setSnackbarShow(true);
     }
     catch (error) {
       console.error(error);
@@ -224,14 +225,14 @@ export default function UserPage() {
         <title> Appointmate </title>
       </Helmet>
       <Snackbar
-        open={Snackbar}
+        open={SnackbarShow}
         autoHideDuration={1000}
       >
         <Alert
           severity="success"
           variant="filled"
           sx={{ width: '100%' }}
-          onClose={() => setSnackbar(false)}
+          onClose={() => setSnackbarShow(false)}
         >
           Email sent successfully
         </Alert>

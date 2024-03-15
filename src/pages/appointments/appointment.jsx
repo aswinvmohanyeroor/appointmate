@@ -5,12 +5,13 @@ import { loginRequest } from '../../utils/auth-config';
 import Cookies from "js-cookie";
 
 import './appointment.scss';
+import { Alert, Snackbar } from "@mui/material";
 const Appointment = () => {
 
     const { instance } = useMsal();
     const activeAccount = instance.getActiveAccount();
 
-
+    const [SnackbarShow, setSnackbarShow] = useState(false);
 
     //how to get the query parameters
     const query = useLocation().search;
@@ -137,6 +138,7 @@ const Appointment = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
+                setSnackbarShow(true);
                 setLoading(prevState => ({ ...prevState, [id]: false }));
             })
             .catch((error) => {
@@ -214,6 +216,19 @@ const Appointment = () => {
                         appointments.length === 0 || appointments.filter((appointment) => appointment.appointed).length === 0 ? <h1>No appointments available</h1> : null
                     }
                 </div>
+                <Snackbar
+                    open={SnackbarShow}
+                    autoHideDuration={1000}
+                >
+                    <Alert
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                        onClose={() => setSnackbarShow(false)}
+                    >
+                        Appointment Assigned Successfully
+                    </Alert>
+                </Snackbar>
             </AuthenticatedTemplate >
             <UnauthenticatedTemplate>
                 <h1>Appointments</h1>
