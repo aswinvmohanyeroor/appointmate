@@ -63,7 +63,6 @@ export default function LoginForm() {
       } else {
         navigate("/dashboard"); // or navigate to the desired page after successful login
       }
-      navigate("/dashboard"); // or navigate to the desired page after successful login
     } catch (error) {
       setLoader(false);
       console.log(error);
