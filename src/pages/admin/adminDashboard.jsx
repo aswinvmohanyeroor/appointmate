@@ -82,7 +82,7 @@ const AdminDashboard = () => {
       console.log(error);
     }
     const userId = Cookies.get("UserId");
-    if (userId !== "649dc9759013b48248c6ed54") {
+    if (userId !== "65f30e24a35308c77cdb18b4") {
       navigate("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -264,6 +264,7 @@ const AdminDashboard = () => {
                         <Button
                           variant="contained"
                           color="error"
+                          disabled={vendor.category === "admin"}
                           onClick={() => deleteVendor(vendor._id)}
                         >
                           Delete
