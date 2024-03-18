@@ -91,7 +91,7 @@ const Links = ({ isAdmin = false }) => {
     try {
       setLoading(true);
       axios.post(
-        "https://appointmate-njp3.onrender.com/api/getAppointments", { tutor: tutor, admin: isAdmin}
+        "https://appointmate-njp3.onrender.com/api/getAppointments", { tutor: tutor, admin: isAdmin }
       ).then((response) => {
         console.log(response.data);
         setFormData(response.data);
@@ -180,18 +180,17 @@ const Links = ({ isAdmin = false }) => {
         <FormControl sx={{ width: 150 }}>
           <InputLabel id="demo-simple-select-label">Room</InputLabel>
 
-          <Select
+          {/* <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={room}
             label="Age"
             onChange={handleSelectRoom}
           >
-            {/* <MenuItem value="Meet">Meet</MenuItem> */}
             <MenuItem value="ME12">ME12</MenuItem>
             <MenuItem value="ME13">ME13</MenuItem>
-            {/* <MenuItem value="Whatsapp">Whatsapp</MenuItem> */}
-          </Select>
+          </Select> */}
+          <TextField placeholder="Enter Room details" value={room} onChange={(e) => setRoom(e.target.value)} />
         </FormControl>
 
         <Button variant="outlined" type="submit" sx={{ width: 150 }}>
@@ -325,7 +324,7 @@ const Links = ({ isAdmin = false }) => {
                         <InputLabel id="demo-simple-select-label">
                           Room
                         </InputLabel>
-                        <Select
+                        {/* <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
                           value={item.room}
@@ -343,7 +342,18 @@ const Links = ({ isAdmin = false }) => {
                         >
                           <MenuItem value="ME12">ME12</MenuItem>
                           <MenuItem value="ME13">ME13</MenuItem>
-                        </Select>
+                        </Select> */}
+                        <TextField placeholder="Enter Room details" value={item.room} onChange={(e) => {
+                          setFormData((prevFormData) => {
+                            const updatedFormData = [...prevFormData];
+                            const index = updatedFormData.findIndex((obj) => obj._id === item._id);
+
+                            if (index !== -1) {
+                              updatedFormData[index].room = e.target.value;
+                            }
+                            return updatedFormData;
+                          });
+                        }} />
                       </FormControl>
                     ) : (
                       item.room

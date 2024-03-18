@@ -87,7 +87,7 @@ const AdminDashboard = () => {
       navigate("/login");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vendors]);
+  }, []);
 
   const deleteVendor = async (id) => {
     try {
