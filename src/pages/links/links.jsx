@@ -13,6 +13,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Tooltip
 } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -23,7 +24,7 @@ import dayjs from 'dayjs';
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 
-const Links = () => {
+const Links = ({ isAdmin = false }) => {
   const [application, setApplication] = useState("Offline");
   const [formData, setFormData] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
@@ -136,7 +137,7 @@ const Links = () => {
 
   const [date, setDate] = useState(dayjs());
   console.log(date.format('YYYY-MM-DDTHH:mm'));
-
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <div className="links--container">
       <Snackbar
@@ -153,7 +154,7 @@ const Links = () => {
         </Alert>
       </Snackbar>
       {loading && <p>Loading...</p>}
-      <form className="links--form" onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
+      {!isAdmin && <form className="links--form" onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DateTimePicker
             label="Controlled picker"
@@ -197,13 +198,22 @@ const Links = () => {
           {loaderSubmit ? "Loading..." : "Submit"}
 
         </Button>
-      </form>
+      </form>}
+      <br />
+      <TextField
+        id="search"
+        label="Search"
+        value={searchTerm}
+        onChange={(event) => setSearchTerm(event.target.value)}
+      />
       {formData.length > 0 && (
         <TableContainer sx={{ marginTop: 5 }}>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
+                {isAdmin && <TableCell>Id</TableCell>}
+                {isAdmin && <TableCell>Appointor</TableCell>}
                 <TableCell>Appointee</TableCell>
                 <TableCell>Medium</TableCell>
                 <TableCell>Room</TableCell>
@@ -212,7 +222,19 @@ const Links = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {formData.map((item,) => (
+              {/* {formData.filter(item => item.tutor.toLowerCase().includes(searchTerm.toLowerCase()) || item.student?.Name.toLowerCase().includes(searchTerm.toLowerCase())).map((item,) => ( */}
+              {formData.filter(item => {
+                const date = new Date(item.date).toLocaleDateString();
+                const searchTermDate = new Date(searchTerm).toLocaleDateString();
+
+                return item.tutor.toLowerCase().includes(searchTerm.toLowerCase())
+                  || item.student?.Name.toLowerCase().includes(searchTerm.toLowerCase())
+                  || date === searchTermDate
+                  || item._id.includes(searchTerm)
+                  || item.medium.toLowerCase().includes(searchTerm.toLowerCase())
+                  || item.room.toLowerCase().includes(searchTerm.toLowerCase());
+              }).map((item,) => (
+
                 <TableRow key={item._id}>
                   <TableCell>
                     {/* {editingIndex === item._id ? (
@@ -240,7 +262,14 @@ const Links = () => {
                     {item.date}
                     {/* )} */}
                   </TableCell>
-
+                  {
+                    isAdmin && <TableCell>
+                      {item._id}
+                    </TableCell>
+                  }
+                  {isAdmin && <TableCell>
+                    {item.tutor}
+                  </TableCell>}
                   <TableCell>
                     <Tooltip title={
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import "./adminDashboard.scss";
 import Cookies from "js-cookie";
+import Links from "../links/links";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -291,6 +292,11 @@ const AdminDashboard = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
+      <br />
+      <div className="table--container">
+        <h1>Appointments</h1>
+        <Links isAdmin={true} />
       </div>
     </div>
   );

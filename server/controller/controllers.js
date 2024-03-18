@@ -278,10 +278,18 @@ export const updateAppointee = async (req, res) => {
 
 
 export async function getAppointments(req, res) {
-  const { tutor } = req.body;
+  const { tutor = "", admin = false } = req.body;
   try {
-    const appointments = await Appointment.find({ tutor });
-    res.json(appointments);
+    if (admin) {
+      const appointments = await Appointment.find();
+      res.json(appointments);
+      return;
+    }
+    else {
+      const appointments = await Appointment.find({ tutor });
+      res.json(appointments);
+    }
+
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }

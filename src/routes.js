@@ -43,7 +43,7 @@ export default function Router() {
         // { path: "app", element: <DashboardAppPage /> },
         { path: "app", element: <UserPage /> },
         { path: "edit", element: <Dashboard /> },
-        { path: "links", element: <Links /> },
+        { path: "links", element: <Links isAdmin={false} /> },
       ],
     },
     {
