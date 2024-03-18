@@ -178,7 +178,7 @@ const Links = ({ isAdmin = false }) => {
           </Select>
         </FormControl>
         <FormControl sx={{ width: 150 }}>
-          <InputLabel id="demo-simple-select-label">Room</InputLabel>
+          {/* <InputLabel id="demo-simple-select-label">Room</InputLabel> */}
 
           {/* <Select
             labelId="demo-simple-select-label"
@@ -321,9 +321,9 @@ const Links = ({ isAdmin = false }) => {
                   <TableCell>
                     {editingIndex === item._id ? (
                       <FormControl sx={{ width: 150 }}>
-                        <InputLabel id="demo-simple-select-label">
+                        {/* <InputLabel id="demo-simple-select-label">
                           Room
-                        </InputLabel>
+                        </InputLabel> */}
                         {/* <Select
                           labelId="demo-simple-select-label"
                           id="demo-simple-select"
