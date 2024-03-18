@@ -91,7 +91,7 @@ const Links = ({ isAdmin = false }) => {
     try {
       setLoading(true);
       axios.post(
-        "https://appointmate-njp3.onrender.com/api/getAppointments", { tutor: tutor }
+        "https://appointmate-njp3.onrender.com/api/getAppointments", { tutor: tutor, admin: isAdmin}
       ).then((response) => {
         console.log(response.data);
         setFormData(response.data);
