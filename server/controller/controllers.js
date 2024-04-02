@@ -186,7 +186,7 @@ export async function deleteVendor(req, res) {
 
 export async function sendMassMail(req, res) {
   try {
-    const { recipients, tutor, tutorName = '' } = req.body; // assuming req.body is an array of objects
+    const { recipients, tutor, name = '' } = req.body; // assuming req.body is an array of objects
 
 
     const sendEmails = recipients.map(async ({ Name, Email }) => {
@@ -198,10 +198,10 @@ export async function sendMassMail(req, res) {
       const mailOptions = {
         from: "cyberfork2000@gmail.com",
         to: Email,
-        subject: `Schedule Your Appointment with ${tutorName}`,
+        subject: `Schedule Your Appointment with ${name}`,
         html: `
             <p>Hello ${Name},</p>
-            <p>This is a mass email from the tutor ${tutorName}. Please click on the link below to book an appointment with the tutor:</p>
+            <p>This is a mass email from the tutor ${name}. Please click on the link below to book an appointment with the tutor:</p>
             <a href="https://appointmate-three.vercel.app/appointments?id=${tutor}&std=${studentData._id}">Book Appointment</a>
         `,
       };
