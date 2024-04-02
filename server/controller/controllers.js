@@ -122,44 +122,49 @@ export async function editVendor(req, res) {
       image,
       description,
       phone,
+      updatePass = false, // Add updatePass field to the request body with a default value of false
     } = req.body;
-    const password = generatePassword(); // Generate a random password
+    let password = null; // Initialize password variable
 
-    //encrypt password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-
-
-    const updateData = {
+    let updateData = {
       name,
       email,
-      password: hashedPassword,
       category,
       image,
       description,
       phone,
     };
 
+    if (updatePass) {
+      password = generatePassword(); // Generate a random password
+
+      //encrypt password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      // Update the password field in the updateData object
+      updateData.password = hashedPassword;
+
+      let mailOptions = {
+        from: 'cyberfork2000@gmail.com',
+        to: email,
+        subject: 'Appointmate updated password',
+        text: `Hello ${name}, your updated appointmate is ${password} `
+      };
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    }
+
+
+
+
     await Teacher.findByIdAndUpdate(id, updateData);
-
-
-    let mailOptions = {
-      from: 'cyberfork2000@gmail.com',
-      to: email,
-      subject: 'Appointmate updated password',
-      text: `Hello ${name}, your updated appointmate is ${password} `
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
-
-
 
     console.log(updateData);
     res.sendStatus(204);

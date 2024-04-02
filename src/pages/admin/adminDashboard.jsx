@@ -105,6 +105,7 @@ const AdminDashboard = () => {
         email: editedVendorEmail,
         password: editedVendorPassword,
         category: editedVendorCategory,
+        updatePass: true,
       };
       await axios.put(
         `https://appointmate-njp3.onrender.com/api/ventors/${id}`,
