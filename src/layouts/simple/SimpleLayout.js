@@ -1,9 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 // components
+import { Button } from '@mui/material';
+import Iconify from '../../components/iconify';
 import Logo from '../../components/logo';
-
 // ----------------------------------------------------------------------
 
 const StyledHeader = styled('header')(({ theme }) => ({
@@ -25,6 +26,15 @@ export default function SimpleLayout() {
     <>
       <StyledHeader>
         <Logo />
+        <Button style={{
+          position: 'absolute',
+          right: 0,
+          marginRight: 20,
+        }} component={Link} to="/faq" variant="contained" startIcon={
+          <Iconify icon="bi:question-circle" width={20} />
+        } color="primary">
+          FAQ
+        </Button>
       </StyledHeader>
 
       <Outlet />

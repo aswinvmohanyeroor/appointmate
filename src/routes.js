@@ -11,6 +11,7 @@ import AdminDashboard from "./pages/admin/adminDashboard";
 import Dashboard from "./pages/dashboard/dashboard";
 import Links from "./pages/links/links";
 import Appointment from "./pages/appointments/appointment";
+import Faq from "./pages/faq";
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +55,10 @@ export default function Router() {
       path: "*",
       element: <Navigate to="/404" replace />,
     },
+    {
+      path: "/faq",
+      element: <Faq />,
+    }
   ]);
 
   return routes;
