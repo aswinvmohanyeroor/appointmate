@@ -68,6 +68,7 @@ const AdminDashboard = () => {
       setEmail("");
       // setPassword("");
       setCategory("");
+      setVendors([...vendors, response.data]);
     } catch (error) {
       console.log(error);
     }
@@ -91,8 +92,11 @@ const AdminDashboard = () => {
 
   const deleteVendor = async (id) => {
     try {
-      await axios.delete(`https://appointmate-njp3.onrender.com/api/ventors/${id}`);
-      setVendors(vendors.filter((vendor) => vendor._id !== id));
+      const confirmed = window.confirm("Are you sure you want to delete this user?");
+      if (confirmed) {
+        await axios.delete(`https://appointmate-njp3.onrender.com/api/ventors/${id}`);
+        setVendors(vendors.filter((vendor) => vendor._id !== id));
+      }
     } catch (error) {
       console.error("Error deleting company:", error);
     }
@@ -100,18 +104,21 @@ const AdminDashboard = () => {
 
   const editVendor = async (id) => {
     try {
-      const editedVendorData = {
-        name: editedVendorName,
-        email: editedVendorEmail,
-        password: editedVendorPassword,
-        category: editedVendorCategory,
-        updatePass: true,
-      };
-      await axios.put(
-        `https://appointmate-njp3.onrender.com/api/ventors/${id}`,
-        editedVendorData
-      );
-      setEditingVendorId(null);
+      const confirmed = window.confirm("New password will be sent to the registered email.");
+      if (confirmed) {
+        const editedVendorData = {
+          name: editedVendorName,
+          email: editedVendorEmail,
+          password: editedVendorPassword,
+          category: editedVendorCategory,
+          updatePass: true,
+        };
+        await axios.put(
+          `https://appointmate-njp3.onrender.com/api/ventors/${id}`,
+          editedVendorData
+        );
+        setEditingVendorId(null);
+      }
     } catch (error) {
       console.error("Error editing company:", error);
     }
