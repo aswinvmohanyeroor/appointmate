@@ -201,6 +201,7 @@ export default function UserPage() {
   const [SnackbarShow, setSnackbarShow] = useState(false);
 
   const tutor = Cookies.get("UserEmail");
+  const tutorName = Cookies.get("UserName");
 
   const handleMailAll = async () => {
     //sent user data to server https://appointmate-njp3.onrender.com/api/mailer
@@ -208,7 +209,7 @@ export default function UserPage() {
       setLoading(true);
       await axios.post(
         "https://appointmate-njp3.onrender.com/api/mailer",
-        { recipients: userData, tutor: tutor }
+        { recipients: userData, tutor: tutor, name: tutorName }
       );
       setLoading(false);
       setSnackbarShow(true);

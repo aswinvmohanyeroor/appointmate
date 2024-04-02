@@ -46,8 +46,10 @@ export default function LoginForm() {
       console.log(userId);
       console.log(token);
       const userEmail = response.data.userData.email;
+      const userName = response.data.userData.name;
       console.log(userEmail);
       Cookies.set("UserEmail", userEmail);
+      Cookies.set("UserName", userName);
       const userCategory = response.data.userData.category;
 
       // Store the token in a cookie
