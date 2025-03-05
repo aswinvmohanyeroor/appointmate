@@ -85,7 +85,7 @@ welcome contributions! To contribute:
 
 ## Contact
 
-For support or inquiries, please contact the development team or refer to the Help section within the Appointmate platform.
+For support refer to the Help section within the Appointmate platform.
 
 ---
 
